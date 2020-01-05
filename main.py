@@ -71,8 +71,36 @@ def jobs_menu(bot, update):
                           message_id=query.message.message_id,
                           text=jobs_menu_message(),
                           reply_markup=jobs_menu_keyboard())
+########################## End of line#################
+def rent_ans(bot, update):
+    query = update.callback_query
+    keyboard = [[InlineKeyboardButton('Back',
+                                      callback_data='rent')]
+                ]
+    markup = InlineKeyboardMarkup(keyboard)
+    bot.send_message(chat_id=query.message.chat_id,
+                     message_id=query.message.message_id,
+                     text=' the rent is ~$600 sgd per month',
+                     reply_markup=None)
+    bot.edit_message_text(chat_id=query.message.chat_id,
+                          message_id=query.message.message_id,
+                          text='',
+                          reply_markup=markup)
 
-
+def pay_ans(bot, update):
+    query = update.callback_query
+    keyboard = [[InlineKeyboardButton('Back',
+                                      callback_data='cost')]
+                ]
+    markup = InlineKeyboardMarkup(keyboard)
+    bot.send_message(chat_id=query.message.chat_id,
+                     message_id=query.message.message_id,
+                     text=' the pay is ~$600 sgd per month',
+                     reply_markup=None)
+    bot.edit_message_text(chat_id=query.message.chat_id,
+                          message_id=query.message.message_id,
+                          text= '',
+                          reply_markup=markup)
 
 
 ############################ Keyboards #########################################
@@ -145,9 +173,9 @@ def curriculum_one_year_menu_keyboard():
 
 def cost_menu_keyboard():
     keyboard = [[InlineKeyboardButton('Rent',
-                                      callback_data='m1_1_1')],
+                                      callback_data='rent')],
                 [InlineKeyboardButton('Pay',
-                                      callback_data='m1_1_2')],
+                                      callback_data='pay')],
                 [InlineKeyboardButton('Financial Aid',
                                       callback_data='m1_1_3')],
                 [InlineKeyboardButton('Scholarships and Awards',
@@ -248,8 +276,10 @@ updater.dispatcher.add_handler(CallbackQueryHandler(cost_menu,
                                                     pattern='cost'))
 updater.dispatcher.add_handler(CallbackQueryHandler(why_menu,
                                                     pattern='why'))
-updater.dispatcher.add_handler(CallbackQueryHandler(jobs_menu,
-                                                    pattern='jobs'))
+updater.dispatcher.add_handler(CallbackQueryHandler(rent_ans,
+                                                    pattern='rent'))
+updater.dispatcher.add_handler(CallbackQueryHandler(pay_ans,
+                                                    pattern='pay'))
 
 
 updater.start_polling()
